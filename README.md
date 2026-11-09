@@ -1,4 +1,4 @@
-# Ember — NATHACKS 2026 firefighter visor prototype
+# Ember: NATHACKS 2026 firefighter visor prototype
 
 One Raspberry Pi camera capture drives both displays:
 
