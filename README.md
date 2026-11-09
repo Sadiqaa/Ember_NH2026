@@ -14,7 +14,7 @@ right arrow at the edge only while a turn is needed. It contains no text or
 secondary symbols. At target lock or when trustworthy guidance is unavailable,
 the camera image is left unobstructed rather than fabricated.
 
-At ambient signal, the Mac explicitly displays `NO FIRE DETECTED` and neither
+At ambient signal, the Mac explicitly displays NO FIRE DETECTED and neither
 display shows a turn arrow. Guidance begins only after two consecutive
 calibrated readings reach the search threshold. A fire needs three consecutive
 strong readings before it is labeled or saved, which rejects brief reflections
@@ -28,24 +28,24 @@ and sensor spikes. Sustained low signal clears guidance again.
 3. Connect the separate IMU/MQ-7/air-temperature ESP directly to the Mac by
    USB-C. The launcher recognizes its verified USB identity automatically.
 4. Leave the Mac connected to its normal Wi-Fi. The launchers use only the
-   Pi's fixed USB address `10.12.194.1` and do not change the default route.
+   Pi's fixed USB address 10.12.194.1 and do not change the default route.
 
 See [HARDWARE_WIRING.md](HARDWARE_WIRING.md) for the OLED and sensor pin map.
 
 ## Run
 
-Double-click `Launch_Firefighter_Visor.command` for the firefighter's Mac view.
+Double-click Launch_Firefighter_Visor.command for the firefighter's Mac view.
 The Pi sends the matching monochrome view to the OLED automatically.
 
 From Terminal, the equivalent commands are:
 
-```sh
+sh
 git clone https://github.com/Sadiqaa/Ember_NH2026.git
 cd Ember_NH2026
 ./Launch_Firefighter_Visor.command
-```
 
-Press `f` in the firefighter window to enter or leave full screen, and `q` to
+
+Press f in the firefighter window to enter or leave full screen, and q to
 close it. If the Pi camera service restarts, Firefighter View pauses briefly
 and reconnects in the same window.
 
@@ -60,12 +60,12 @@ mark while the strip scrolls with head movement. This is directional IR signal,
 not a temperature measurement. This prototype is not certified life-safety gear.
 
 When a confirmed fire signal falls within the camera's horizontal field of
-view, the Mac adds a brighter localized patch labeled `FIRE`. The most recent
+view, the Mac adds a brighter localized patch labeled FIRE. The most recent
 confirmed source in the current IMU/service session is remembered at its
 world-relative bearing as a fixed light-orange patch labeled
-`PREVIOUS FIRE DETECTED HERE`. It disappears when that bearing leaves the
+PREVIOUS FIRE DETECTED HERE. It disappears when that bearing leaves the
 camera view and reappears in the correct place when the wearer looks back. If
-the source is still active at that location, the current `FIRE` label takes
+the source is still active at that location, the current FIRE label takes
 precedence. This session marker deliberately resets with the service because
 relative-yaw zero can change after an IMU restart. Off-camera sources use
 arrows only, and the OLED remains text-free and unchanged by either colour
@@ -75,12 +75,12 @@ effect.
 
 The glasses-mounted GPIO10 receiver and a separate IR emitter stand in for a
 fire detector and fire source. The wire protocol still calls the raw field
-`FLAME` for compatibility, but wearer-facing screens consistently say `FIRE`.
+FLAME for compatibility, but wearer-facing screens consistently say FIRE.
 
 The installed calibration records emitter-off/covered and emitter-on/aimed
 readings and accounts for active-high versus active-low modules. This receiver
-is calibrated active-low with ambient `4095.0` and an aimed target median of
-`147.5`; those endpoints are installed in the Pi service.
+is calibrated active-low with ambient 4095.0 and an aimed target median of
+147.5; those endpoints are installed in the Pi service.
 One forward-facing receiver can provide signal strength and a centre lock. A
 measured left/right bearing additionally requires the heading sensor or two
 spatially separated IR receivers.
@@ -92,19 +92,19 @@ search instructions rather than a measured bearing, so they do not display
 degrees. On the Mac they change from amber to red as the signal becomes
 meaningful; the OLED shows one matching direction arrow over its processed
 camera view. Guidance requires two consecutive normalized readings of at least
-`1200`; a confirmed `FIRE` requires three consecutive readings of at least
-`2800`. Eight sustained low readings (about 0.8 seconds) release search
+1200; a confirmed FIRE requires three consecutive readings of at least
+2800. Eight sustained low readings (about 0.8 seconds) release search
 guidance and return the displays to the no-fire state.
 
 The separate Mac-attached ESP now supplies IMU yaw, air temperature, and MQ-7
 readings automatically. Keep it still for about 1.5 seconds whenever its USB
 connection opens, then slowly sweep the wearer past the emitter once. The
 program bins the glasses IR strength into 10-degree heading sectors and displays
-`TURN LEFT/RIGHT N DEG` on the Mac while the OLED keeps only the matching small
+TURN LEFT/RIGHT N DEG on the Mac while the OLED keeps only the matching small
 edge arrow. The number is relative yaw, not an absolute compass bearing.
 
 Each new target lock is also saved in the Pi's SQLite history at
-`/home/nathacks/camera-oled/data/target_history.sqlite3`. The Mac HUD displays
+/home/nathacks/camera-oled/data/target_history.sqlite3. The Mac HUD displays
 the most recent time, signal, and relative bearing when available. With no
 heading or GPS, the stored location is explicitly marked unknown; history is
 never reused as a current navigation bearing after a restart.
