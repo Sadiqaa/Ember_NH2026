@@ -1,0 +1,8 @@
+[Unit]
+Description=One-shot guarded Freenove ESP32-S3 backup and provisioning
+After=multi-user.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/nathacks-provision-s3
+TimeoutStartSec=infinity

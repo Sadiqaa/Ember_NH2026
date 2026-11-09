@@ -1,0 +1,19 @@
+[Unit]
+Description=NATHACKS camera to Mac and ESP32 OLED (dependency-free raw mode)
+After=network.target
+Conflicts=nathacks-camera.service nathacks-camera-oled.service
+
+[Service]
+Type=simple
+User=nathacks
+SupplementaryGroups=video render dialout
+WorkingDirectory=/home/nathacks/camera-oled
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/usr/bin/python3 /home/nathacks/camera-oled/raw_camera_oled_bridge.py --port 8888 --width 1024 --height 576 --camera-fps 30 --oled-fps 15 --serial-device /dev/nathacks-oled --rotation 180
+Restart=always
+RestartSec=1
+KillSignal=SIGINT
+TimeoutStopSec=7
+
+[Install]
+WantedBy=multi-user.target

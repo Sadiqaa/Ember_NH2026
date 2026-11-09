@@ -1,0 +1,18 @@
+.pio/
+.vscode/
+
+__pycache__/
+*.py[cod]
+*$py.class
+
+.DS_Store
+.env
+.env.*
+*.log
+*.sqlite
+*.sqlite3
+*.db
+
+# Full device flash dumps are recovery artifacts, not source code. They may
+# contain device-specific state and must remain local.
+hardware_backups/

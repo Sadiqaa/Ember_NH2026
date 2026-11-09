@@ -1,0 +1,4 @@
+# Stable name for this visor's Freenove ESP32-S3 CH343 USB-UART bridge.
+# The serial constraint prevents another CH343-based board from taking over
+# the OLED/sensor device name when several development boards are connected.
+SUBSYSTEM=="tty", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="55d3", ATTRS{serial}=="5C94049272", SYMLINK+="nathacks-oled"

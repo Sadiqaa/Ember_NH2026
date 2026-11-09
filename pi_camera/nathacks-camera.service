@@ -1,0 +1,19 @@
+[Unit]
+Description=NATHACKS camera to Mac and ESP32 OLED
+After=network.target
+
+[Service]
+Type=simple
+User=nathacks
+SupplementaryGroups=video render dialout
+WorkingDirectory=/home/nathacks/camera-oled
+Environment=PYTHONUNBUFFERED=1
+Environment=PYTHONPATH=/home/nathacks/camera-oled/vendor
+ExecStart=/usr/bin/python3 /home/nathacks/camera-oled/picamera2_camera_oled_bridge.py --port 8888 --width 1920 --height 1080 --camera-fps 30 --bitrate 18000000 --keyframe-interval 15 --oled-fps 15 --temporal-weight 1.0 --contrast-margin 0 --edge-mode --serial-device /dev/nathacks-oled --telemetry-udp-port 8892 --sensor-port auto --sensor-baud 115200 --ir-ambient 4095.0 --ir-target 147.5 --target-db /home/nathacks/camera-oled/data/target_history.sqlite3 --rotation 180
+Restart=always
+RestartSec=1
+KillSignal=SIGINT
+TimeoutStopSec=7
+
+[Install]
+WantedBy=multi-user.target
